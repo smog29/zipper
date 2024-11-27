@@ -3,23 +3,19 @@ require 'rails_helper'
 RSpec.describe "Api::V1::Users::UsersController", type: :request do
   let(:valid_params) do
     {
-      user: {
-        name: "John Doe",
-        email: "user@example.com",
-        password: "SecurePass1!",
-        password_confirmation: "SecurePass1!"
-      }
+      name: "John Doe",
+      email: "user@example.com",
+      password: "SecurePass1!",
+      password_confirmation: "SecurePass1!"
     }
   end
 
   let(:invalid_params) do
     {
-      user: {
-        name: "",
-        email: "invalid_email",
-        password: "short",
-        password_confirmation: "mismatch"
-      }
+      name: "",
+      email: "invalid_email",
+      password: "short",
+      password_confirmation: "mismatch"
     }
   end
 
