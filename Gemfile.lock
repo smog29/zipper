@@ -257,6 +257,7 @@ GEM
       rubocop-performance
       rubocop-rails
     ruby-progressbar (1.13.0)
+    rubyzip (2.3.2)
     securerandom (0.3.2)
     shoulda-matchers (6.4.0)
       activesupport (>= 5.2.0)
@@ -315,6 +316,7 @@ DEPENDENCIES
   rails (~> 7.2.2)
   rspec-rails (~> 7.0.0)
   rubocop-rails-omakase
+  rubyzip (~> 2.3, >= 2.3.2)
   shoulda-matchers (~> 6.0)
   sprockets-rails
   stimulus-rails

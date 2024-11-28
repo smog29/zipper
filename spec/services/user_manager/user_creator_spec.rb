@@ -22,8 +22,7 @@ RSpec.describe UserManager::UserCreator, type: :service do
   describe '#call' do
     context 'when user creation is successful' do
       it 'returns a token' do
-        service = UserManager::UserCreator.new(valid_params)
-        result = service.call
+        result = UserManager::UserCreator.call(valid_params)
 
         expect(result[:token]).to be_present
         expect(result[:errors]).to be_empty
@@ -33,8 +32,7 @@ RSpec.describe UserManager::UserCreator, type: :service do
 
     context 'when user creation fails due to validation errors' do
       it 'returns an error message' do
-        service = UserManager::UserCreator.new(invalid_params)
-        result = service.call
+        result = UserManager::UserCreator.call(invalid_params)
 
         expect(result[:token]).to be_nil
         expect(result[:errors]).to be_present
