@@ -25,7 +25,7 @@ module FileManager
     end
 
     def generate_download_link(zip_file_path)
-      DownloadLinkGenerator.call(zip_file_path)
+      DownloadLinkGenerator.call(@user, zip_file_path)
     end
   end
 end

@@ -1,7 +1,7 @@
 module FileManager
   class FileEncryptor < ApplicationService
-    def initialize(file, password)
-      @file = file
+    def initialize(file_path, password)
+      @file_path = file_path
       @password = password
     end
 
@@ -13,8 +13,9 @@ module FileManager
       iv = cipher.random_iv
       cipher.iv = iv
 
+      # Directly open the file using the provided file path
       File.open(encrypted_file_path, "wb") do |out_file|
-        File.open(@file.path, "rb") do |in_file|
+        File.open(@file_path, "rb") do |in_file|
           out_file.write(iv)
           IO.copy_stream(in_file, out_file)
         end

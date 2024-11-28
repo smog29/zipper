@@ -1,6 +1,8 @@
 module Api
   module V1
     class AuthenticationController < ApplicationController
+      skip_before_action :authenticate_request!
+
       # Post /login
       def login
         login_service = UserManager::UserLogin.call(params[:email], params[:password])

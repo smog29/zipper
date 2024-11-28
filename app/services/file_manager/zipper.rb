@@ -1,3 +1,5 @@
+require "zip"
+
 module FileManager
   class Zipper < ApplicationService
     def initialize(encrypted_file_path)
