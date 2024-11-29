@@ -19,7 +19,23 @@ RSpec.describe FileManager::FileUploader, type: :service do
     end
 
     it 'calls the stubbed services' do
-      expect(download_link).to eq({ download_link: link, password: "123" })
+      expect(download_link.success).to be true
+      expect(download_link.download_link).to eq(link)
+      expect(download_link.password).to eq("123")
+      expect(download_link.errors).to be_nil
+    end
+
+    context 'when FileNotFoundError is raised' do
+      before do
+        allow(FileManager::ZipCreator).to receive(:call).and_raise(FileManager::FileNotFoundError)
+      end
+
+      it 'returns a failed result' do
+        expect(download_link.success).to be false
+        expect(download_link.download_link).to be_nil
+        expect(download_link.password).to be_nil
+        expect(download_link.errors).to eq("File not found")
+      end
     end
   end
 end

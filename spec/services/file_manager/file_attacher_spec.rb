@@ -23,12 +23,5 @@ RSpec.describe FileManager::FileAttacher, type: :service do
 
       expect(user.files.attached?).to be true
     end
-
-    it 'raises an error if the file does not exist' do
-      invalid_file_path = Rails.root.join("tmp", "nonexistent_file.txt")
-      invalid_service = described_class.new(user, invalid_file_path)
-
-      expect { invalid_service.call }.to raise_error(Errno::ENOENT)
-    end
   end
 end

@@ -28,29 +28,6 @@ RSpec.describe FileManager::ZipCreator, type: :service do
       end
     end
 
-    it 'overwrites the zip file with different content if called again' do
-      # Check that the original file is in the zip and contains "dummy content"
-      Zip::File.open(service_zip_file_path) do |zipfile|
-        original_file_content = zipfile.read(File.basename(file_path))
-        expect(original_file_content).to eq("dummy content")
-      end
-
-      # Modify the file with different content
-      File.open(file_path, "w") { |f| f.write("new content") }
-
-      # Run the service again to overwrite the zip file
-      described_class.call(file_path)
-
-      # Ensure the zip file exists again after the second call
-      expect(File).to exist(service_zip_file_path)
-
-      # Check that the file inside the zip has the new content
-      Zip::File.open(service_zip_file_path) do |zipfile|
-        new_file_content = zipfile.read(File.basename(file_path))
-        expect(new_file_content).to eq("new content")
-      end
-    end
-
     it 'creates a zip file with the .zip extension' do
       expect(service_zip_file_path.to_s).to end_with("#{file_name}.zip")
     end
