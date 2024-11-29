@@ -1,31 +1,24 @@
 module FileManager
   class FileUploader < ApplicationService
-    def initialize(user, file)
+    attr_reader :user, :file_path
+
+    def initialize(user, file_path)
       @user = user
-      @file = file
+      @file_path = file_path
     end
 
     def call
-      password = SecureRandom.hex(16)
-      encrypted_file_path = encrypt_file(password)
-      zip_file_path = create_zip(encrypted_file_path)
-      download_link = generate_download_link(zip_file_path)
+      zip_file_path = ZipCreator.call(file_path)
+      file_blob = FileAttacher.call(user, zip_file_path) { cleanup_zip_file(zip_file_path) }
+      download_link = DownloadLinkGenerator.call(file_blob)
 
-      { download_link:, password: }
+      { download_link:, password: "123" }
     end
 
     private
 
-    def encrypt_file(password)
-      FileEncryptor.call(@file, password)
-    end
-
-    def create_zip(encrypted_file_path)
-      Zipper.call(encrypted_file_path)
-    end
-
-    def generate_download_link(zip_file_path)
-      DownloadLinkGenerator.call(@user, zip_file_path)
+    def cleanup_zip_file(zip_file_path)
+      File.delete(zip_file_path) if File.exist?(zip_file_path)
     end
   end
 end

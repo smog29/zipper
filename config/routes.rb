@@ -18,7 +18,4 @@ Rails.application.routes.draw do
       resources :file_uploads, only: [ :create ]
     end
   end
-
-  match "*unmatched",
-    to: ->(env) { [ 404, { "Content-Type" => "application/json" }, [ { error: "Not Found" }.to_json ] ] }, via: :all
 end

@@ -1,18 +1,26 @@
 require 'rails_helper'
 
 RSpec.describe FileManager::DownloadLinkGenerator, type: :service do
-  let(:zip_file_path) { Rails.root.join("tmp", "#{SecureRandom.hex}.zip") }
-  let(:download_link) { described_class.call(zip_file_path) }
+  let(:blob) { instance_double("ActiveStorage::Blob", signed_id: "abc123", filename: "test_file.txt") }
+  let(:mock_url) { "http://example.com/rails/active_storage/blobs/abc123/test_file.txt" }
 
   before do
-    allow(Rails.application.routes.url_helpers).to receive(:rails_blob_path)
-      .with(zip_file_path, only_path: true)
-      .and_return("/download/#{zip_file_path.basename}")
+    allow(Rails.application.routes.url_helpers).to receive(:rails_blob_url)
+      .with(blob, disposition: "attachment")
+      .and_return(mock_url)
   end
 
   describe '#call' do
-    it 'generates a download link for the zip file' do
-      expect(download_link).to eq("/download/#{zip_file_path.basename}")
+    subject(:download_link) { described_class.new(blob).call }
+
+    it 'generates the mocked download link' do
+      expect(download_link).to eq(mock_url)
+    end
+
+    it 'calls rails_blob_url with the correct arguments' do
+      download_link
+      expect(Rails.application.routes.url_helpers).to have_received(:rails_blob_url)
+        .with(blob, disposition: "attachment")
     end
   end
 end
