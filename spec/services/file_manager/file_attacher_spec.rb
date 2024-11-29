@@ -9,10 +9,6 @@ RSpec.describe FileManager::FileAttacher, type: :service do
     File.open(file_path, "w") { |f| f.write("dummy content") }
   end
 
-  after do
-    File.delete(file_path) if File.exist?(file_path)
-  end
-
   describe '#call' do
     subject(:blob) { described_class.call(user, file_path) }
 
@@ -22,6 +18,11 @@ RSpec.describe FileManager::FileAttacher, type: :service do
       expect(blob.content_type).to eq("text/plain")
 
       expect(user.files.attached?).to be true
+    end
+
+    it 'deletes the file after attaching it' do
+      blob
+      expect(File.exist?(file_path)).to be false
     end
   end
 end
