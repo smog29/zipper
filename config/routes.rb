@@ -15,7 +15,7 @@ Rails.application.routes.draw do
 
       post "auth/login", to: "authentication#login"
 
-      resources :files, only: [ :create ]
+      resources :files, only: [ :create, :index ]
     end
   end
 end

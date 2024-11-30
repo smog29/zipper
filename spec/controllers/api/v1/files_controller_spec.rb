@@ -68,6 +68,70 @@ RSpec.describe "Api::V1::FilesController", type: :request do
     end
   end
 
+  describe "GET /api/v1/files" do
+    let(:user) { create(:user) }
+    let(:user_id) { user.id }
+    let(:headers) { { "Authorization" => "Bearer mock_token" } }
+
+    before { allow(JWT).to receive(:decode).and_return([ { "user_id" => user_id } ]) }
+
+    context "when user is not authorized" do
+      it_behaves_like "not authorized" do
+        let(:request) { get("/api/v1/files", headers:) }
+      end
+    end
+
+    context "when the user has files" do
+      let(:file1) { 'file1.txt' }
+      let(:file2) { 'file2.txt' }
+
+      before do
+        allow(FileManager::FileLister).to receive(:call).and_return(
+          double("FileLister", success: true, named_files: [
+            { name: file1, download_link: "http://example.com/#{file1}" },
+            { name: file2, download_link: "http://example.com/#{file2}" }
+          ])
+        )
+      end
+
+      it "returns a list of files with download links" do
+        get("/api/v1/files", headers:)
+
+        expect(response).to have_http_status(:ok)
+        expect(response_body).to include(
+          "files" => [
+            { "name" => file1, "download_link" => "http://example.com/#{file1}" },
+            { "name" => file2, "download_link" => "http://example.com/#{file2}" }
+          ]
+        )
+      end
+    end
+
+    context "when the user has no files" do
+      it "returns an empty list" do
+        get("/api/v1/files", headers:)
+
+        expect(response).to have_http_status(:ok)
+        expect(response_body).to include("files" => [])
+      end
+    end
+
+    context "when an error occurs while fetching files" do
+      before do
+        allow(FileManager::FileLister).to receive(:call).and_return(
+          double("FileLister", success: false, errors: "Unable to fetch files")
+        )
+      end
+
+      it "returns an error message" do
+        get("/api/v1/files", headers:)
+
+        expect(response).to have_http_status(:internal_server_error)
+        expect(response_body).to include("errors" => "Unable to fetch files")
+      end
+    end
+  end
+
   def response_body
     JSON.parse(response.body)
   end

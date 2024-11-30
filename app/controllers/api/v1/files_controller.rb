@@ -4,7 +4,13 @@ module Api
       before_action :validate_file_presence!, only: :create
 
       def index
-        
+        file_lister = FileManager::FileLister.call(@current_user)
+
+        if file_lister.success
+          render json: { files: file_lister.named_files }, status: :ok
+        else
+          render json: { errors: file_lister.errors }, status: :internal_server_error
+        end
       end
 
       def create
