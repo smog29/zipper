@@ -8,11 +8,11 @@ module FileManager
     end
 
     def call
-      io = File.open(file_path)
-      blob = user.files.attach(io:, filename: File.basename(file_path)).last
-      io.close
-      cleanup_file
-      blob
+      File.open(file_path).then do |file|
+        blob = user.files.attach(io: file, filename: File.basename(file_path)).last
+        cleanup_file
+        blob
+      end
     end
 
     private

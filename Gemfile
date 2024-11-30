@@ -40,7 +40,7 @@ gem "jwt"
 
 gem "pry", "~> 0.15.0"
 
-gem "rubyzip", "~> 2.3", ">= 2.3.2"
+gem "rubyzip"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

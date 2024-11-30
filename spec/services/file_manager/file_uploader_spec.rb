@@ -5,6 +5,8 @@ RSpec.describe FileManager::FileUploader, type: :service do
   let(:user) { create(:user) }
   let(:file_name) { "test_file" }
   let(:file_path) { Rails.root.join("tmp", "#{file_name}.txt") }
+  let(:zip_password) { SecureRandom.hex(4) }
+  let(:zip_data) { { zip_file_path:, password: zip_password } }
   let(:zip_file_path) { Rails.root.join("tmp", "#{file_name}.zip") }
   let(:link) { "www.example.com/link" }
 
@@ -13,7 +15,7 @@ RSpec.describe FileManager::FileUploader, type: :service do
 
     before do
       fake_blob = instance_double(ActiveStorage::Blob)
-      allow(FileManager::ZipCreator).to receive(:call).with(file_path).and_return(zip_file_path)
+      allow(FileManager::ZipCreator).to receive(:call).with(file_path).and_return(zip_data)
       allow(FileManager::FileAttacher).to receive(:call).with(user, zip_file_path).and_return(fake_blob)
       allow(FileManager::DownloadLinkGenerator).to receive(:call).with(fake_blob).and_return(link)
     end
@@ -21,7 +23,7 @@ RSpec.describe FileManager::FileUploader, type: :service do
     it 'calls the stubbed services' do
       expect(download_link.success).to be true
       expect(download_link.download_link).to eq(link)
-      expect(download_link.password).to eq("123")
+      expect(download_link.password).to eq(zip_password)
       expect(download_link.errors).to be_nil
     end
 

@@ -18,7 +18,10 @@ RSpec.describe FileManager::ZipCreator, type: :service do
   end
 
   describe '#call' do
-    subject(:service_zip_file_path) { described_class.call(file_path) }
+    subject(:zip_data) { described_class.call(file_path) }
+
+    let(:service_zip_file_path) { zip_data[:zip_file_path] }
+    let(:zip_password) { zip_data[:password] }
 
     it 'creates a zip file containing the original file' do
       expect(File).to exist(service_zip_file_path)
@@ -30,6 +33,10 @@ RSpec.describe FileManager::ZipCreator, type: :service do
 
     it 'creates a zip file with the .zip extension' do
       expect(service_zip_file_path.to_s).to end_with("#{file_name}.zip")
+    end
+
+    it 'returns a password for the zip file' do
+      expect(zip_password).to be_present
     end
   end
 end
