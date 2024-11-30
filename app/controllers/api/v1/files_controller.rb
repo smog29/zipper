@@ -14,7 +14,7 @@ module Api
       end
 
       def create
-        file_uploader = FileManager::FileUploader.call(@current_user, params[:file])
+        file_uploader = FileManager::FileUploader.call(@current_user, params[:file_path])
 
         if file_uploader.success
           render json: { download_link: file_uploader.download_link, password: file_uploader.password }, status: :ok
@@ -26,7 +26,7 @@ module Api
       private
 
       def validate_file_presence!
-        if params[:file].blank?
+        if params[:file_path].blank?
           render json: { errors: "No file uploaded" }, status: :unprocessable_entity
         end
       end

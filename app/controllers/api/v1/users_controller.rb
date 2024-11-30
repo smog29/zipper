@@ -3,7 +3,6 @@ module Api
     class UsersController < ApplicationController
       skip_before_action :authenticate_request!, only: :create
 
-      # Post /users
       def create
         creator = UserManager::UserCreator.call(user_params)
 

@@ -14,14 +14,14 @@ RSpec.describe "Api::V1::FilesController", type: :request do
   describe "POST /api/v1/files" do
     let(:user) { create(:user) }
     let(:user_id) { user.id }
-    let(:file) { fixture_file_upload(Rails.root.join("spec", "fixtures", "sample.txt"), "text/plain") }
+    let(:file_path) { fixture_file_upload(Rails.root.join("spec", "fixtures", "sample.txt"), "text/plain") }
     let(:headers) { { "Authorization" => "Bearer mock_token" } }
 
     before { allow(JWT).to receive(:decode).and_return([ { "user_id" => user_id } ]) }
 
     context "when user is not authorized" do
       it_behaves_like "not authorized" do
-        let(:request) { post("/api/v1/files", params: { file: }, headers:) }
+        let(:request) { post("/api/v1/files", params: { file_path: }, headers:) }
       end
     end
 
@@ -33,7 +33,7 @@ RSpec.describe "Api::V1::FilesController", type: :request do
       end
 
       it "returns a download link and password" do
-        post("/api/v1/files", params: { file: }, headers:)
+        post("/api/v1/files", params: { file_path: }, headers:)
 
         expect(response).to have_http_status(:ok)
         expect(response_body).to include(
@@ -55,15 +55,15 @@ RSpec.describe "Api::V1::FilesController", type: :request do
     context "when file upload fails" do
       before do
         allow(FileManager::FileUploader).to receive(:call).and_return(
-          double("FileUploader", success: false, errors: ["File upload failed"])
+          double("FileUploader", success: false, errors: [ "File upload failed" ])
         )
       end
 
       it "returns an error message" do
-        post("/api/v1/files", params: { file: }, headers:)
+        post("/api/v1/files", params: { file_path: }, headers:)
 
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response_body).to include("errors" => ["File upload failed"])
+        expect(response_body).to include("errors" => [ "File upload failed" ])
       end
     end
   end
