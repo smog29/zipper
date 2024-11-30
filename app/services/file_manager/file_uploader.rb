@@ -12,10 +12,10 @@ module FileManager
       file_blob = FileAttacher.call(user, zip_data[:zip_file_path])
       download_link = DownloadLinkGenerator.call(file_blob)
 
-      FileUploadResult.new(success: true, download_link:, password: zip_data[:password])
+      Results::FileUploadResult.new(success: true, download_link:, password: zip_data[:password])
 
       rescue FileNotFoundError, StandardError => e
-        FileUploadResult.new(success: false, errors: e.message)
+        Results::FileUploadResult.new(success: false, errors: e.message)
     end
   end
 end

@@ -20,7 +20,7 @@ RSpec.describe Api::V1::AuthenticationController, type: :request do
 
     context "when credentials are valid" do
       it "returns a token" do
-        post "/api/v1/auth/login", params: valid_credentials, as: :json
+        post("/api/v1/auth/login", params: valid_credentials, as: :json)
 
         expect(response).to have_http_status(:ok)
         expect(json_response).to include("token")
@@ -30,7 +30,7 @@ RSpec.describe Api::V1::AuthenticationController, type: :request do
 
     context "when credentials are invalid" do
       it "returns an error message" do
-        post "/api/v1/auth/login", params: invalid_credentials, as: :json
+        post("/api/v1/auth/login", params: invalid_credentials, as: :json)
 
         expect(response).to have_http_status(:unauthorized)
         expect(json_response["token"]).to be_nil
@@ -41,7 +41,7 @@ RSpec.describe Api::V1::AuthenticationController, type: :request do
 
     context "when email is missing" do
       it "returns an error message" do
-        post "/api/v1/auth/login", params: { password: "SecurePass1!" }, as: :json
+        post("/api/v1/auth/login", params: { password: "SecurePass1!" }, as: :json)
 
         expect(response).to have_http_status(:unauthorized)
         expect(json_response["token"]).to be_nil
@@ -51,7 +51,7 @@ RSpec.describe Api::V1::AuthenticationController, type: :request do
 
     context "when password is missing" do
       it "returns an error message" do
-        post "/api/v1/auth/login", params: { email: user.email }, as: :json
+        post("/api/v1/auth/login", params: { email: user.email }, as: :json)
 
         expect(response).to have_http_status(:unauthorized)
         expect(json_response["token"]).to be_nil

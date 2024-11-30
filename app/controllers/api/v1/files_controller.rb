@@ -3,6 +3,10 @@ module Api
     class FilesController < ApplicationController
       before_action :validate_file_presence!, only: :create
 
+      def index
+        
+      end
+
       def create
         file_uploader = FileManager::FileUploader.call(@current_user, params[:file])
 

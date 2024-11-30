@@ -24,7 +24,7 @@ RSpec.describe Api::V1::UsersController, type: :request do
 
     context "when the request is valid" do
       it "creates a new user and returns a token" do
-        post "/api/v1/users", params: valid_params, as: :json
+        post("/api/v1/users", params: valid_params, as: :json)
 
         expect(response).to have_http_status(:created)
         expect(json_response).to include("token")
@@ -34,7 +34,7 @@ RSpec.describe Api::V1::UsersController, type: :request do
 
     context "when the request is invalid" do
       it "does not create a user and returns an error message" do
-        post "/api/v1/users", params: invalid_params, as: :json
+        post("/api/v1/users", params: invalid_params, as: :json)
 
         expect(response).to have_http_status(:unprocessable_entity)
         expect(json_response["token"]).to be_nil
