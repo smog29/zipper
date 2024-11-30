@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Api::V1::Users::UsersController", type: :request do
+RSpec.describe Api::V1::UsersController, type: :request do
   let(:valid_params) do
     {
       name: "John Doe",

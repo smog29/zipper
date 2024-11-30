@@ -1,9 +1,7 @@
 module Api
   module V1
-    class FileUploadsController < ApplicationController
-      include ActiveStorage::SetCurrent
-
-      before_action :validate_file_presence!
+    class FilesController < ApplicationController
+      before_action :validate_file_presence!, only: :create
 
       def create
         file_uploader = FileManager::FileUploader.call(@current_user, params[:file])

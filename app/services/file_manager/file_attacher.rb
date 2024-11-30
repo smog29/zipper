@@ -17,6 +17,7 @@ module FileManager
 
     private
 
+    # Cleanup the file from the temporary directory after attaching it
     def cleanup_file
       File.delete(file_path) if File.exist?(file_path)
     end
