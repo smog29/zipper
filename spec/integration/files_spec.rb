@@ -1,6 +1,6 @@
 require "swagger_helper"
 
-RSpec.describe "Api::V1::FilesController", type: :request do
+RSpec.describe "Files API" do
   let(:user) { create(:user) }
   let(:user_id) { user.id }
   let(:headers) { { "Authorization" => "Bearer mock_token" } }
