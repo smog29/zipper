@@ -27,7 +27,7 @@ module Api
 
       def validate_file_presence!
         if params[:file_path].blank?
-          render json: { errors: "No file uploaded" }, status: :unprocessable_entity
+          render json: { errors: "File path not provided" }, status: :unprocessable_entity
         end
       end
     end

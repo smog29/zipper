@@ -10,7 +10,7 @@ RSpec.shared_examples "not authorized" do
   end
 end
 
-RSpec.describe "Api::V1::FilesController", type: :request do
+RSpec.describe "Files managment", type: :request do
   describe "POST /api/v1/files" do
     let(:user) { create(:user) }
     let(:user_id) { user.id }
@@ -43,12 +43,12 @@ RSpec.describe "Api::V1::FilesController", type: :request do
       end
     end
 
-    context "when no file is uploaded" do
+    context "when file path is not provided" do
       it "returns an error message" do
         post("/api/v1/files", params: {}, headers:)
 
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response_body).to include("errors" => "No file uploaded")
+        expect(response_body).to include("errors" => "File path not provided")
       end
     end
 

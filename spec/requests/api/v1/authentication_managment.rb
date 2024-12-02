@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Api::V1::AuthenticationController, type: :request do
+RSpec.describe "Authentication managment", type: :request do
   let(:user) { create(:user, password: "SecurePass1!", password_confirmation: "SecurePass1!") }
   let(:valid_credentials) do
     {

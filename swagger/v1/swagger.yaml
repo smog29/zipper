@@ -1,0 +1,103 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/files":
+    post:
+      summary: Upload a file
+      tags:
+      - Files
+      security:
+      - Bearer: []
+      parameters: []
+      responses:
+        '200':
+          description: file uploaded successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  download_link:
+                    type: string
+                    example: http://localhost:3000/files/sample.txt
+                  password:
+                    type: string
+                    example: password123
+        '422':
+          description: file upload failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: string
+                    example: File path not provided
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: string
+                    example: Unauthorized request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                file_path:
+                  type: string
+        required: true
+        description: The file to upload
+    get:
+      summary: List user files
+      tags:
+      - Files
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: files listed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  files:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          example: sample.txt
+                        download_link:
+                          type: string
+                          example: http://localhost:3000/files/sample.txt
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: string
+                    example: Unauthorized request
+servers:
+- url: http://localhost:3000
+components:
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+- Bearer: []
