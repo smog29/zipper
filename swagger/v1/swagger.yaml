@@ -91,6 +91,67 @@ paths:
                   errors:
                     type: string
                     example: Unauthorized request
+  "/api/v1/users":
+    post:
+      summary: Create a user
+      tags:
+      - Users
+      parameters: []
+      responses:
+        '201':
+          description: user created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: jwt_token
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example: []
+        '422':
+          description: unprocessable entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: 'null'
+                  errors:
+                    type: string
+                    example: Password confirmation doesn't match Password, Name can't
+                      be blank, Email is invalid, Password is too short (minimum is
+                      6 characters), and Password Must include at least one uppercase
+                      letter and one special character
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: string
+                email:
+                  type: string
+                  example: string
+                password:
+                  type: string
+                  example: string
+                password_confirmation:
+                  type: string
+                  example: string
+              required:
+              - name
+              - email
+              - password
+              - password_confirmation
+        description: Create a new user
 servers:
 - url: http://localhost:3000
 components:

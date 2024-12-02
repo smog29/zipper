@@ -17,7 +17,8 @@ RSpec.describe "Files API" do
       produces "application/json"
       security [ Bearer: [] ]
 
-      parameter name: :params, in: :body, schema: { type: :object, properties: { file_path: { type: :string } } }, required: true, description: "The file to upload"
+      parameter name: :params, in: :body, schema: { type: :object, properties: { file_path: { type: :string } } },
+                required: true, description: "The file to upload"
 
       response "200", "file uploaded successfully" do
         schema type: :object, properties: {
