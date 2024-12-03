@@ -29,10 +29,10 @@ RSpec.describe "Users Management API" do
       parameter name: :params, in: :body, schema: {
         type: :object,
         properties: {
-          name: { type: :string, example: "string" },
-          email: { type: :string, example: "string" },
-          password: { type: :string, example: "string" },
-          password_confirmation: { type: :string, example: "string" }
+          name: { type: :string, example: "user" },
+          email: { type: :string, example: "user@example.com" },
+          password: { type: :string, example: "User1!" },
+          password_confirmation: { type: :string, example: "User1!" }
         },
         required: [ "name", "email", "password", "password_confirmation" ]
       }, description: "Create a new user"

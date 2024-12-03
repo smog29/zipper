@@ -39,10 +39,10 @@ paths:
               properties:
                 email:
                   type: string
-                  example: string
+                  example: user@example.com
                 password:
                   type: string
-                  example: string
+                  example: User1!
               required:
               - email
               - password
@@ -65,7 +65,7 @@ paths:
                 properties:
                   download_link:
                     type: string
-                    example: http://localhost:3000/files/sample.txt
+                    example: http://localhost:3000/files/sample.zip
                   password:
                     type: string
                     example: password123
@@ -97,8 +97,9 @@ paths:
               properties:
                 file_path:
                   type: string
+                  example: "/home/user/Desktop/sample.txt"
         required: true
-        description: The file to upload
+        description: Full path of the file to upload
     get:
       summary: List user files
       tags:
@@ -120,10 +121,10 @@ paths:
                       properties:
                         name:
                           type: string
-                          example: sample.txt
+                          example: sample.zip
                         download_link:
                           type: string
-                          example: http://localhost:3000/files/sample.txt
+                          example: http://localhost:3000/files/sample.zip
         '401':
           description: unauthorized
           content:
@@ -172,16 +173,16 @@ paths:
               properties:
                 name:
                   type: string
-                  example: string
+                  example: user
                 email:
                   type: string
-                  example: string
+                  example: user@example.com
                 password:
                   type: string
-                  example: string
+                  example: User1!
                 password_confirmation:
                   type: string
-                  example: string
+                  example: User1!
               required:
               - name
               - email

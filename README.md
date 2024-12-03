@@ -1,24 +1,27 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Zipper API
 
-Things you may want to cover:
+A Rails application providing a RESTful JSON API for managing file uploads and downloads. The app includes user authentication, zip encryption, and documentation. The app uses MySQL for the database.
 
-* Ruby version
+### Requirements
+* ruby 3.3.3
+* rails 7.2.2
 
-* System dependencies
+### Getting Started
 
-* Configuration
+* create a `.env` file in the root directory of the project and add the following environment variables:
+  ```shell
+  DATABASE_USER=<your-database-user>
+  DATABASE_PASSWORD=<your-database-password>
+  ```
 
-* Database creation
+* to run the application, execute the following commands:
+  ```shell
+  bundle install
+  rails db:create
+  rails db:migrate
+  rails s
+  ```
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+API Documentation: OpenAPI documentation is available at `/api/docs`, rendered using Swagger UI. Managing files requires user authentication. The API uses a bearer token for authentication.

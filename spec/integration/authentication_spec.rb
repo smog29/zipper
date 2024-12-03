@@ -25,8 +25,8 @@ RSpec.describe "Authentication API" do
       parameter name: :params, in: :body, schema: {
         type: :object,
         properties: {
-          email: { type: :string, example: "string" },
-          password: { type: :string, example: "string" }
+          email: { type: :string, example: "user@example.com" },
+          password: { type: :string, example: "User1!" }
         },
         required: [ "email", "password" ]
       }, description: "Authenticate user with email and password"
