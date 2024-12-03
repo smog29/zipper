@@ -1,7 +1,7 @@
 module Api
   module V1
     class FilesController < ApplicationController
-      before_action :validate_file_presence!, only: :create
+      before_action :validate_file_path_presence!, only: :create
 
       def index
         file_lister = FileManager::FileLister.call(@current_user)
@@ -25,7 +25,7 @@ module Api
 
       private
 
-      def validate_file_presence!
+      def validate_file_path_presence!
         if params[:file_path].blank?
           render json: { errors: "File path not provided" }, status: :unprocessable_entity
         end
