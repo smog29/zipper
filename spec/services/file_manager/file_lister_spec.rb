@@ -13,8 +13,6 @@ RSpec.describe FileManager::FileLister, type: :service do
 
   before do
     allow(user).to receive(:files).and_return(files)
-    # allow(file1).to receive(:filename).and_return(blob1.filename)
-    # allow(file2).to receive(:filename).and_return(blob2.filename)
     allow(FileManager::DownloadLinkGenerator).to receive(:call).with(blob1).and_return("http://example.com/file1.txt")
     allow(FileManager::DownloadLinkGenerator).to receive(:call).with(blob2).and_return("http://example.com/file2.txt")
   end
