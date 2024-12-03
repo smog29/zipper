@@ -13,9 +13,9 @@ module UserManager
       if user&.authenticate(@password)
         token = encode(user_id: user.id)
 
-        { token:, errors: [] }
+        Results::TokenResult.new(success: true, token: token)
       else
-        { token: nil, errors: "Invalid email or password" }
+        Results::TokenResult.new(success: false, errors: "Invalid email or password")
       end
     end
   end

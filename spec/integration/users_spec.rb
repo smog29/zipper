@@ -34,13 +34,12 @@ RSpec.describe "Users Management API" do
           password: { type: :string, example: "string" },
           password_confirmation: { type: :string, example: "string" }
         },
-        required: ["name", "email", "password", "password_confirmation"]
+        required: [ "name", "email", "password", "password_confirmation" ]
       }, description: "Create a new user"
 
       response "201", "user created successfully" do
         schema type: :object, properties: {
-          token: { type: :string, example: "jwt_token" },
-          errors: { type: :array, items: { type: :string }, example: [] }
+          token: { type: :string, example: "jwt_token" }
         }
 
         let(:params) { valid_params }
@@ -50,7 +49,6 @@ RSpec.describe "Users Management API" do
 
       response "422", "unprocessable entity" do
         schema type: :object, properties: {
-          token: { type: "null" },
           errors: {
             type: :string,
             example: "Password confirmation doesn't match Password, Name can't be blank, Email is invalid, " \

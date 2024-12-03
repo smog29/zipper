@@ -11,9 +11,9 @@ module UserManager
 
       if user.save
         token = encode(user_id: user.id)
-        { token:, errors: [] }
+        Results::TokenResult.new(success: true, token:)
       else
-        { token: nil, errors: user.errors.full_messages.to_sentence }
+        Results::TokenResult.new(success: false, errors: user.errors.full_messages.to_sentence)
       end
     end
   end

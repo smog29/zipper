@@ -21,23 +21,16 @@ paths:
                   token:
                     type: string
                     example: jwt_token
-                  errors:
-                    type: array
-                    items:
-                      type: string
-                    example: []
         '401':
-          description: unauthorized, missing password
+          description: unauthorized
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  token:
-                    type: 'null'
                   errors:
                     type: string
-                    example: Password is required
+                    example: Invalid email or password
       requestBody:
         content:
           application/json:
@@ -158,11 +151,6 @@ paths:
                   token:
                     type: string
                     example: jwt_token
-                  errors:
-                    type: array
-                    items:
-                      type: string
-                    example: []
         '422':
           description: unprocessable entity
           content:
@@ -170,8 +158,6 @@ paths:
               schema:
                 type: object
                 properties:
-                  token:
-                    type: 'null'
                   errors:
                     type: string
                     example: Password confirmation doesn't match Password, Name can't

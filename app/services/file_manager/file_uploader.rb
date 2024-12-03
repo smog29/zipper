@@ -1,7 +1,5 @@
 module FileManager
   class FileUploader < ApplicationService
-    attr_reader :user, :file_path
-
     def initialize(user, file_path)
       @user = user
       @file_path = file_path
@@ -17,5 +15,9 @@ module FileManager
       rescue FileNotFoundError, StandardError => e
         Results::FileUploadResult.new(success: false, errors: e.message)
     end
+
+    private
+
+    attr_reader :user, :file_path
   end
 end

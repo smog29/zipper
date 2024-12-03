@@ -6,7 +6,11 @@ module Api
       def create
         creator = UserManager::UserCreator.call(user_params)
 
-        render json: creator, status: creator[:errors].blank? ? :created : :unprocessable_entity
+        if creator.success
+          render json: { token: creator.token }, status: :created
+        else
+          render json: { errors: creator.errors }, status: :unprocessable_entity
+        end
       end
 
       private

@@ -24,7 +24,6 @@ RSpec.describe "Authentication managment", type: :request do
 
         expect(response).to have_http_status(:ok)
         expect(json_response).to include("token")
-        expect(json_response["errors"]).to be_empty
       end
     end
 
@@ -33,7 +32,6 @@ RSpec.describe "Authentication managment", type: :request do
         post("/api/v1/auth/login", params: invalid_credentials, as: :json)
 
         expect(response).to have_http_status(:unauthorized)
-        expect(json_response["token"]).to be_nil
         expect(json_response).to include("errors")
         expect(json_response["errors"]).to include("Invalid email or password")
       end
@@ -44,8 +42,8 @@ RSpec.describe "Authentication managment", type: :request do
         post("/api/v1/auth/login", params: { password: "SecurePass1!" }, as: :json)
 
         expect(response).to have_http_status(:unauthorized)
-        expect(json_response["token"]).to be_nil
         expect(json_response).to include("errors")
+        expect(json_response["errors"]).to include("Invalid email or password")
       end
     end
 
@@ -54,8 +52,8 @@ RSpec.describe "Authentication managment", type: :request do
         post("/api/v1/auth/login", params: { email: user.email }, as: :json)
 
         expect(response).to have_http_status(:unauthorized)
-        expect(json_response["token"]).to be_nil
         expect(json_response).to include("errors")
+        expect(json_response["errors"]).to include("Invalid email or password")
       end
     end
   end

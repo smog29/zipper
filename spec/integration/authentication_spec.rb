@@ -28,13 +28,12 @@ RSpec.describe "Authentication API" do
           email: { type: :string, example: "string" },
           password: { type: :string, example: "string" }
         },
-        required: ["email", "password"]
+        required: [ "email", "password" ]
       }, description: "Authenticate user with email and password"
 
       response "200", "login successful" do
         schema type: :object, properties: {
-          token: { type: :string, example: "jwt_token" },
-          errors: { type: :array, items: { type: :string }, example: [] }
+          token: { type: :string, example: "jwt_token" }
         }
 
         let(:params) { valid_credentials }
@@ -44,33 +43,10 @@ RSpec.describe "Authentication API" do
 
       response "401", "unauthorized" do
         schema type: :object, properties: {
-          token: { type: "null" },
           errors: { type: :string, example: "Invalid email or password" }
         }
 
         let(:params) { invalid_credentials }
-
-        run_test!
-      end
-
-      response "401", "unauthorized, missing email" do
-        schema type: :object, properties: {
-          token: { type: "null" },
-          errors: { type: :string, example: "Email is required" }
-        }
-
-        let(:params) { { password: "SecurePass1!" } }
-
-        run_test!
-      end
-
-      response "401", "unauthorized, missing password" do
-        schema type: :object, properties: {
-          token: { type: "null" },
-          errors: { type: :string, example: "Password is required" }
-        }
-
-        let(:params) { { email: user.email } }
 
         run_test!
       end

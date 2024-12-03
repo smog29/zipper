@@ -12,8 +12,8 @@ RSpec.describe UserManager::UserLogin, type: :service do
       it 'returns a token and the user' do
         result = UserManager::UserLogin.call(valid_email, valid_password)
 
-        expect(result[:token]).to be_present
-        expect(result[:errors]).to be_empty
+        expect(result.token).to be_present
+        expect(result.errors).to be_nil
       end
     end
 
@@ -21,8 +21,8 @@ RSpec.describe UserManager::UserLogin, type: :service do
       it 'returns an error message' do
         result = UserManager::UserLogin.call(invalid_email, valid_password)
 
-        expect(result[:token]).to be_nil
-        expect(result[:errors]).to eq("Invalid email or password")
+        expect(result.token).to be_nil
+        expect(result.errors).to eq("Invalid email or password")
       end
     end
 
@@ -30,8 +30,8 @@ RSpec.describe UserManager::UserLogin, type: :service do
       it 'returns an error message' do
         result = UserManager::UserLogin.call(valid_email, invalid_password)
 
-        expect(result[:token]).to be_nil
-        expect(result[:errors]).to eq("Invalid email or password")
+        expect(result.token).to be_nil
+        expect(result.errors).to eq("Invalid email or password")
       end
     end
 
@@ -39,8 +39,8 @@ RSpec.describe UserManager::UserLogin, type: :service do
       it 'returns an error message' do
         result = UserManager::UserLogin.call(invalid_email, invalid_password)
 
-        expect(result[:token]).to be_nil
-        expect(result[:errors]).to eq("Invalid email or password")
+        expect(result.token).to be_nil
+        expect(result.errors).to eq("Invalid email or password")
       end
     end
   end
