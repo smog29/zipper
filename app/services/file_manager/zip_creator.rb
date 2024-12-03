@@ -8,7 +8,7 @@ module FileManager
     end
 
     def call
-      raise FileNotFoundError, "File not found at path: #{file_path}" unless File.exist?(file_path)
+      raise FileNotFoundError, "File not found at path: #{file_path}" unless File.file?(file_path)
 
       file_name = File.basename(file_path)
       zip_name = File.basename(file_name, File.extname(file_name))
