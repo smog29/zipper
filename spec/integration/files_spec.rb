@@ -43,7 +43,7 @@ RSpec.describe "Files API" do
         let(:user_id) { -1 }
 
         schema type: :object, properties: {
-          errors: { type: :string, example: "Unauthorized request" }
+          errors: { type: :string, example: "Unauthorized" }
         }
 
         run_test!
